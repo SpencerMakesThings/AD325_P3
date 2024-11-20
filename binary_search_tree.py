@@ -108,15 +108,27 @@ class BinarySearchTree:
                     else:
                         parent.right = current_node.right
                     return  # Node found and removed
+                
                 else:                                    # Case 3
                     # Find successor (leftmost child of right subtree)
+                    # successor_parent = current_node
                     successor = current_node.right
                     while successor.left is not None:
+                        # successor = current_node.right
                         successor = successor.left
                     current_node.key = successor.key      # Copy successor to current node
+
+                    # if successor_parent.left is successor:
+                    #   successor_parent.left = successor.right
+                    # else:
+                    #   successor_parent.right = successor.right
+                    # return
+
                     parent = current_node
                     current_node = current_node.right     # Remove successor from right subtree
                     key = parent.key                      # Loop continues with new key
+
+
             elif current_node.key < key: # Search right
                 parent = current_node
                 current_node = current_node.right
@@ -129,14 +141,26 @@ class BinarySearchTree:
 
     ####### ADDITIONAL METHODS #######
     def inorder_traversal(self, node):
-
-        pass
+        return_list = []                                    # a list to hold all nodes in order
+        if node is not None:                                        # recursively search all nodes
+            return_list.extend(self.inorder_traversal(node.left))   # searches all left first
+            return_list.append(node.key)                            # add node to return list
+            return_list.extend(self.inorder_traversal(node.right))  # search all right next
+        return return_list                                          # return that list
 
     def preorder_traversal(self,node):
-
-        pass
+        return_list = []
+        if node is not None:
+            return_list.append(node.key)                            # append first
+            return_list.extend(self.preorder_traversal(node.left))  # then do left
+            return_list.extend(self.preorder_traversal(node.right)) # then do right
+        return return_list
 
     def postorder_traversal(self,node):
-
-        pass
+        return_list = []
+        if node is not None:
+            return_list.append(node.key)                            # append first
+            return_list.extend(self.postorder_traversal(node.right))# then do right
+            return_list.extend(self.postorder_traversal(node.left)) # then do left
+        return return_list
     
