@@ -8,11 +8,8 @@
 # Then we'll need some methods for populating it
 # 
 
-import graphviz
+import graphviz # I think this should be working?
 from binary_search_tree import BinarySearchTree, Node
-from patient_record_mgmt import PatientRecord
-
-
 
 class PatientRecord:
     def __init__(self, patient_id, name, age, diagnosis, blood_pressure,
@@ -36,9 +33,6 @@ class PatientRecord:
         print("Blood Pressure:   ", self.blood_pressure)
         print("Pulse:            ", self.pulse)
         print("Body Temperature: ", self.body_temperature)
-
-
-
 
 
 class PatientRecordManagementSystem:
@@ -71,13 +65,21 @@ class PatientRecordManagementSystem:
 
 
     def display_all_records(self):
+        # traverse in order
+        # print each patient record
 
-        pass
+        inorder_list = self.bst.inorder_traversal(self.bst.root)
+
+        for i in inorder_list:
+            node = self.bst.search(i)
+            node_val = node.get_value()
+            node_val.print_patient_record()
 
 
     def build_tree_from_csv(self, file_path):
         # given the path to CSV
         # puts each line from CSV into tree node
+
         pass
 
 
