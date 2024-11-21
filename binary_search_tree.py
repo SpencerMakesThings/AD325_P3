@@ -164,3 +164,12 @@ class BinarySearchTree:
             return_list.extend(self.postorder_traversal(node.left)) # then do left
         return return_list
     
+    ### additional methods ###
+
+    def get_keys_value(self, key):
+        node = self.search(key)
+        
+        if node is not None:
+            return node.get_value()
+        else:
+            return None

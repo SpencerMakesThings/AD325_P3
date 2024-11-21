@@ -60,7 +60,8 @@ class PatientRecordManagementSystem:
 
 
     def search_patient_record(self, patient_id):
-        return self.bst.search(patient_id)
+        node = self.bst.search(patient_id)
+        return node
 
 
     def delete_patient_record(self, patient_id):
@@ -113,6 +114,7 @@ class PatientRecordManagementSystem:
         # run that graphviz thing
         dot = graphviz.Digraph()
         self._add_nodes(dot, self.bst.root)
+        dot.view()
         return dot
 
 
@@ -126,3 +128,11 @@ class PatientRecordManagementSystem:
                 dot.edge(str(node.key), str(node.right.key))
                 self._add_nodes(dot, node.right)
 
+    def print_keys_record(self, key):
+        node = self.search(key)
+        if node is not None:
+            pat_rec = node.get_value()
+            if pat_rec is not None:
+                pat_rec.print_patient_record()
+        else:
+            print('Record not found')
