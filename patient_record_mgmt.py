@@ -72,13 +72,13 @@ class PatientRecordManagementSystem:
     def display_all_records(self):
         # traverse in order
         # print each patient record
-
+        print("    DISPLAY_ALL_RECORDS")
         inorder_list = self.bst.inorder_traversal(self.bst.root)
-
         for i in inorder_list:
             node = self.bst.search(i)
             node_val = node.get_value()
             node_val.print_patient_record()
+        print(" ")
 
 
     def build_tree_from_csv(self, file_path):
@@ -129,7 +129,7 @@ class PatientRecordManagementSystem:
                 self._add_nodes(dot, node.right)
 
     def print_keys_record(self, key):
-        node = self.search(key)
+        node = self.bst.search(key)
         if node is not None:
             pat_rec = node.get_value()
             if pat_rec is not None:
