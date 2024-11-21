@@ -15,7 +15,7 @@ class PatientRecord:
     def __init__(self, patient_id, name, age, diagnosis, blood_pressure,
                            pulse, body_temperature):
         
-        self.patient_id = patient_id
+        self.patient_id = int(patient_id)
         self.name = name
         self.age = age
         self.diagnosis = diagnosis
@@ -23,9 +23,12 @@ class PatientRecord:
         self.pulse = pulse
         self.body_temperature = body_temperature
 
+
     # optional, a method for returning the patient record in a neat format
     def print_patient_record(self):
-
+        print(self.patient_id, self.name, self.age, self.diagnosis,
+              self.blood_pressure, self.pulse, self.body_temperature)
+        """
         print("Patient ID:       ", self.patient_id)
         print("Name:             ", self.name)
         print("Age:              ", self.age)
@@ -33,10 +36,11 @@ class PatientRecord:
         print("Blood Pressure:   ", self.blood_pressure)
         print("Pulse:            ", self.pulse)
         print("Body Temperature: ", self.body_temperature)
+        print(" ")
+        """
 
 
 class PatientRecordManagementSystem:
-
 
     def __init__(self):
         self.bst = BinarySearchTree()
@@ -79,11 +83,33 @@ class PatientRecordManagementSystem:
     def build_tree_from_csv(self, file_path):
         # given the path to CSV
         # puts each line from CSV into tree node
+        try:
+            with open(file_path, 'r') as file:
+                for line in file:
 
-        pass
+                    line = line.strip()
+                    if not line:
+                        continue
+
+                    fields = line.split(',')
+
+                    try:
+                        patient_id = int(fields[0])
+                    except ValueError:
+                        continue
+                    name = fields[1]
+                    age = int(fields[2])
+                    diagnosis = fields[3]
+                    blood_pressure = fields[4]
+                    pulse = int(fields[5])
+                    body_temperature = float(fields[6])
+
+                    self.add_patient_record(patient_id,name,age,diagnosis,blood_pressure,pulse, body_temperature)
+        except FileNotFoundError: print("File not found")
+        except Exception as e: print("Error: ", e)
 
 
-    def vizualize_tree(self):
+    def visualize_tree(self):
         # run that graphviz thing
         dot = graphviz.Digraph()
         self._add_nodes(dot, self.bst.root)
