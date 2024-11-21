@@ -71,8 +71,6 @@ class BinarySearchTree:
 
 
     # Removes the node with the matching key from the tree.
-    # f this method and that it didn't work right out the box
-    # f it right in the a
     def remove(self, key):
         parent = None
         current_node = self.root
@@ -111,7 +109,7 @@ class BinarySearchTree:
             else:
                 parent = current_node
                 current_node = current_node.left
-        print(f"Key {key} not found in the tree.")
+        print("Key not found")
         return None 
 
 
