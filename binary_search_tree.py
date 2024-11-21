@@ -6,16 +6,12 @@ class Node:
         self.value = value
         self.left = None
         self.right = None
-
     ### additional methods ###
     def get_key(self):
         return self.key
-    
     def get_value(self):
         return self.value
-
-
-
+        
 
 class BinarySearchTree:
 
@@ -75,71 +71,52 @@ class BinarySearchTree:
 
 
     # Removes the node with the matching key from the tree.
+    # f this method and that it didn't work right out the box
+    # f it right in the a
     def remove(self, key):
         parent = None
         current_node = self.root
-        
-        # Search for the node.
         while current_node is not None:
-        
-            # Check if current_node has a matching key.
-            if current_node.key == key: 
-                if current_node.left is None and current_node.right is None:   # Case 1
-                    if parent is None: # Node is root
-                        self.root = None
-                    elif parent.left is current_node: 
-                        parent.left = None
-                    else:
-                        parent.right = None
-                    return  # Node found and removed
-                elif current_node.left is not None and current_node.right is None:  # Case 2
-                    if parent is None: # Node is root
-                        self.root = current_node.left
-                    elif parent.left is current_node: 
-                        parent.left = current_node.left
-                    else:
-                        parent.right = current_node.left
-                    return  # Node found and removed
-                elif current_node.left is None and current_node.right is not None:  # Case 2
-                    if parent is None: # Node is root
-                        self.root = current_node.right
-                    elif parent.left is current_node:
-                        parent.left = current_node.right
-                    else:
-                        parent.right = current_node.right
-                    return  # Node found and removed
-                
-                else:                                    # Case 3
-                    # Find successor (leftmost child of right subtree)
-                    # successor_parent = current_node
+            if current_node.key == key:
+                if current_node.left is None and current_node.right is None:
+                    if parent is None:self.root = None
+                    elif parent.left is current_node:parent.left = None
+                    else:parent.right = None
+                    return
+                elif current_node.left is None:
+                    if parent is None:self.root = current_node.right
+                    elif parent.left is current_node:parent.left = current_node.right
+                    else:parent.right = current_node.right
+                    return
+                elif current_node.right is None:
+                    if parent is None:self.root = current_node.left
+                    elif parent.left is current_node:parent.left = current_node.left
+                    else:parent.right = current_node.left
+                    return
+                else:
                     successor = current_node.right
+                    successor_parent = current_node
                     while successor.left is not None:
-                        # successor = current_node.right
+                        successor_parent = successor
                         successor = successor.left
-                    current_node.key = successor.key      # Copy successor to current node
-
-                    # if successor_parent.left is successor:
-                    #   successor_parent.left = successor.right
-                    # else:
-                    #   successor_parent.right = successor.right
-                    # return
-
-                    parent = current_node
-                    current_node = current_node.right     # Remove successor from right subtree
-                    key = parent.key                      # Loop continues with new key
-
-
-            elif current_node.key < key: # Search right
+                    current_node.key = successor.key
+                    current_node.value = successor.value
+                    if successor_parent.left == successor:
+                        successor_parent.left = successor.right
+                    else:successor_parent.right = successor.right
+                    return
+            elif current_node.key < key:
                 parent = current_node
                 current_node = current_node.right
-            else:                        # Search left
+            else:
                 parent = current_node
                 current_node = current_node.left
-                
-        return # Node not found
-    
+        print(f"Key {key} not found in the tree.")
+        return None 
 
-    ####### ADDITIONAL METHODS #######
+
+
+        ####### ADDITIONAL METHODS #######
     def inorder_traversal(self, node):
         return_list = []                                    # a list to hold all nodes in order
         if node is not None:                                        # recursively search all nodes
@@ -167,6 +144,14 @@ class BinarySearchTree:
     ### additional methods ###
 
     def get_keys_value(self, key):
+        node = self.search(key)
+        
+        if node is not None:
+            return node.get_value()
+        else:
+            return None
+        
+    def print_keys_value(self, key):
         node = self.search(key)
         
         if node is not None:
